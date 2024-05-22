@@ -60,6 +60,6 @@ ENV APP_DIR=/usr/local/src/whisper
 WORKDIR $APP_DIR
 RUN mkdir $APP_DIR/models
 ENV WHISPER_MODEL_DIR=$APP_DIR/models
-RUN R -e "audio.whisper::whisper_download_model(Sys.getenv('WHISPER_MODEL'), version = '1.5.4')"
+RUN R -e "audio.whisper::whisper_download_model(Sys.getenv('WHISPER_MODEL', unset = 'medium'), version = '1.5.4')"
 
 CMD ["R"]
