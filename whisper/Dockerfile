@@ -55,11 +55,12 @@ RUN git clone https://github.com/bnosac/audio.whisper.git -b 0.4.1 \
     && rm -r audio.whisper
 
 ## Set the APP_DIR folder + download the medium model by default
-ENV WHISPER_MODEL=${WHISPER_MODEL}
 ENV APP_DIR=/usr/local/src/whisper
 WORKDIR $APP_DIR
 RUN mkdir $APP_DIR/models
 ENV WHISPER_MODEL_DIR=$APP_DIR/models
+ENV WHISPER_MODEL=$WHISPER_MODEL
+RUN R -e "cat(sprintf('Downloading <%s> to %s', Sys.getenv('WHISPER_MODEL', unset = 'medium'), Sys.getenv('WHISPER_MODEL_DIR')))"
 RUN R -e "audio.whisper::whisper_download_model(Sys.getenv('WHISPER_MODEL', unset = 'medium'), version = '1.5.4')"
 
 CMD ["R"]
