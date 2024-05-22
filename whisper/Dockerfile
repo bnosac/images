@@ -1,8 +1,8 @@
-ARG R_VERSION=4.4.0
+#ARG R_VERSION=4.4.0
 ARG IMAGE_REGISTRY=docker.io
 ARG IMAGE_ORG=rocker
-ARG WHISPER_MODEL=medium
-FROM $IMAGE_REGISTRY/$IMAGE_ORG/r-ver:$R_VERSION
+#FROM $IMAGE_REGISTRY/$IMAGE_ORG/r-ver:$R_VERSION
+FROM $IMAGE_REGISTRY/$IMAGE_ORG/r2u:22.04
 LABEL org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.vendor="BNOSAC" \
       org.opencontainers.image.authors="Jan Wijffels <jwijffels@bnosac.be>"
@@ -55,11 +55,13 @@ RUN git clone https://github.com/bnosac/audio.whisper.git -b 0.4.1 \
     && rm -r audio.whisper
 
 ## Set the APP_DIR folder + download the medium model by default
-ENV APP_DIR=/usr/local/src/whisper
+ARG WHISPER_MODEL=medium
+#ENV APP_DIR=/usr/local/src/whisper
+ENV APP_DIR=/app
 WORKDIR $APP_DIR
 RUN mkdir $APP_DIR/models
 ENV WHISPER_MODEL_DIR=$APP_DIR/models
-RUN R -e "cat(sprintf('Downloading <%s> to %s', Sys.getenv('WHISPER_MODEL', unset = 'medium'), Sys.getenv('WHISPER_MODEL_DIR')))"
+RUN R -e "cat(sprintf('Downloading whisper gguf model <%s> to %s', Sys.getenv('WHISPER_MODEL', unset = 'medium'), Sys.getenv('WHISPER_MODEL_DIR')))"
 RUN R -e "audio.whisper::whisper_download_model(Sys.getenv('WHISPER_MODEL', unset = 'medium'), version = '1.5.4')"
 
 CMD ["R"]
