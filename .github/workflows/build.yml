@@ -12,9 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      max-parallel: 1
       matrix:
         config:
-          - { tag: "whisper-base", dockerfile: "whisper/Dockerfile", context: "whisper"}
+          - { tag: "whisper-base",             dockerfile: "whisper/Dockerfile",        context: "whisper"}
+          - { tag: "whisper-base-cuda-11-8",   dockerfile: "whisper/Dockerfile.cuda",   context: "whisper"}
 
     steps:
       - name: Clone

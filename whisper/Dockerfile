@@ -12,20 +12,20 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 ## Install CUDA in case the hardware is a GPU - use CUDA 11-8 to be able to run Silero VAD with torch
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends software-properties-common dirmngr \
-    && dpkg -i cuda-keyring_1.1-1_all.deb \
-    && rm cuda-keyring_1.1-1_all.deb \
-    && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y nvidia-gds cuda-11-8 cuda-toolkit-11-8 cuda-drivers \
-    && apt-get autoremove -y --quiet \
-    && apt-get clean --quiet \
-    && rm -rf /var/lib/apt/lists/*
-ENV PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
-ENV LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-ENV CUDA_PATH=/usr/local/cuda-11.8
-ENV CUDA=11.8
+#RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
+#    && apt-get update \
+#    && apt-get install -y --no-install-recommends software-properties-common dirmngr \
+#    && dpkg -i cuda-keyring_1.1-1_all.deb \
+#    && rm cuda-keyring_1.1-1_all.deb \
+#    && apt-get update \
+#    && DEBIAN_FRONTEND=noninteractive apt-get install -y nvidia-gds cuda-11-8 cuda-toolkit-11-8 cuda-drivers \
+#    && apt-get autoremove -y --quiet \
+#    && apt-get clean --quiet \
+#    && rm -rf /var/lib/apt/lists/*
+#ENV PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
+#ENV LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+#ENV CUDA_PATH=/usr/local/cuda-11.8
+#ENV CUDA=11.8
 
 ## General R packages
 RUN apt-get update \
