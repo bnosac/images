@@ -33,7 +33,7 @@ ENV CUDA=11.8
 
 ## General R packages
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends r-cran-rcpp r-cran-av r-cran-data.table r-cran-jsonlite r-cran-zip
+    && apt-get install -y --no-install-recommends r-cran-rcpp r-cran-av r-cran-data.table r-cran-jsonlite r-cran-zip \
     && apt-get autoremove -y --quiet \
     && apt-get clean --quiet \
     && rm -rf /var/lib/apt/lists/*
