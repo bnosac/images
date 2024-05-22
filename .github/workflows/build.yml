@@ -41,4 +41,4 @@ jobs:
           tags: "ghcr.io/bnosac/${{ matrix.config.tag }}:latest"            
           file: ${{ matrix.config.dockerfile }}
           build-args: |
-            WHISPER_MODEL="base"
+            WHISPER_MODEL=medium
