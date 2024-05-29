@@ -61,13 +61,15 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/bnosac/${{ matrix.config.tag }}
+          tags: |
+            # set latest tag for default branch
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push ghcr.io
         uses: docker/build-push-action@v5
         with:
           context: ${{ matrix.config.context }}
           push: ${{ github.event_name != 'pull_request' }}
-          labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
           file: ${{ matrix.config.dockerfile }}
           build-args: |
