@@ -36,6 +36,9 @@ RUN apt-get update \
 
 ## Always enable OpenBLAS with audio.whisper
 ENV WHISPER_OPENBLAS=1
+## Main folder is the folder /app which will contain the audio.whisper_x.y.z.tar.gz and the models
+ENV APP_DIR=/app
+WORKDIR $APP_DIR
 
 ## Install audio.whisper and VAD (audio.vadwebrtc/audio.vadsilero)
 RUN R -e "install.packages('remotes')" \
@@ -53,8 +56,6 @@ RUN git clone https://github.com/bnosac/audio.whisper.git -b 0.4.1 \
 ## Set the APP_DIR folder + download the medium model by default
 ARG WHISPER_MODEL=medium
 #ENV APP_DIR=/usr/local/src/whisper
-ENV APP_DIR=/app
-WORKDIR $APP_DIR
 RUN mkdir $APP_DIR/models
 ENV WHISPER_MODEL_DIR=$APP_DIR/models
 RUN R -e "cat(sprintf('Downloading whisper gguf model <%s> to %s', Sys.getenv('WHISPER_MODEL', unset = 'medium'), Sys.getenv('WHISPER_MODEL_DIR')))"
