@@ -1,12 +1,18 @@
 name: Build Docker Image
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'master'
       - 'main'
-  workflow_dispatch:
-
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - 'master'
+      - 'main'
+      
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -49,13 +55,20 @@ jobs:
           large-packages: true
           docker-images: false
           swap-storage: true
+          
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/bnosac/${{ matrix.config.tag }}
 
       - name: Build and push ghcr.io
         uses: docker/build-push-action@v5
         with:
           context: ${{ matrix.config.context }}
-          push: true
-          tags: "ghcr.io/bnosac/${{ matrix.config.tag }}:latest"            
+          push: ${{ github.event_name != 'pull_request' }}
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
           file: ${{ matrix.config.dockerfile }}
           build-args: |
             WHISPER_MODEL=medium
