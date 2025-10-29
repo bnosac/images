@@ -10,6 +10,9 @@ RUN git clone https://github.com/bnosac/audio.whisper.git -b v1.8.2 \
     && R CMD build audio.whisper \
     && R CMD INSTALL audio.whisper_0.5.0.tar.gz \
     && rm -r audio.whisper
+    
+RUN R -e "cat(sprintf('Downloading whisper gguf model <%s> to %s', 'large-v3-turbo-q8_0', Sys.getenv('WHISPER_MODEL_DIR')))"
+RUN R -e "audio.whisper::whisper_download_model('large-v3-turbo-q5_0', version = '1.8.2')"    
 
 ## Install CUDA in case the hardware is a GPU - use CUDA 11-8 to be able to run Silero VAD with torch
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
