@@ -3,6 +3,9 @@ LABEL org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.vendor="BNOSAC" \
       org.opencontainers.image.authors="Jan Wijffels <jwijffels@bnosac.be>"
 
+## audio.whisper 0.5.0 which builds with cmake
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends cmake
 RUN git clone https://github.com/bnosac/audio.whisper.git -b v1.8.2 \
     && R CMD build audio.whisper \
     && R CMD INSTALL audio.whisper_0.5.0.tar.gz \
