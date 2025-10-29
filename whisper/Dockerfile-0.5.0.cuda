@@ -1,0 +1,30 @@
+FROM ghcr.io/bnosac/whisper-base:latest
+LABEL org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.vendor="BNOSAC" \
+      org.opencontainers.image.authors="Jan Wijffels <jwijffels@bnosac.be>"
+
+## audio.whisper 0.5.0 which builds with cmake
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends cmake
+RUN git clone https://github.com/bnosac/audio.whisper.git -b v1.8.2 \
+    && R CMD build audio.whisper \
+    && R CMD INSTALL audio.whisper_0.5.0.tar.gz \
+    && rm -r audio.whisper
+
+## Install CUDA in case the hardware is a GPU - use CUDA 11-8 to be able to run Silero VAD with torch
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends software-properties-common dirmngr \
+    && dpkg -i cuda-keyring_1.1-1_all.deb \
+    && rm cuda-keyring_1.1-1_all.deb \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y cuda-toolkit-11-8 --no-install-recommends \
+    && apt-get autoremove -y --quiet \
+    && apt-get clean --quiet \
+    && rm -rf /var/lib/apt/lists/*
+ENV PATH=/usr/local/cuda-11.8/bin${PATH:+:${PATH}}
+ENV LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+ENV CUDA_PATH=/usr/local/cuda-11.8
+ENV CUDA=11.8
+
+RUN R -e "torch::install_torch(reinstall = TRUE)"
