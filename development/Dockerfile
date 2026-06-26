@@ -51,7 +51,7 @@ ENV PATH="/rocker_scripts/bin:${PATH}"
 ENV CRAN="https://p3m.dev/cran/__linux__/noble/latest"
 RUN /rocker_scripts/install_R_source.sh
 ## littler and all kind of symlinks for it
-RUN apt-get update && apt-get install -y libpcre2-dev libzstd-dev liblzma-dev libbz2-dev zlib1g-dev libdeflate-dev libicu-dev gcc && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev libuv1-dev libfontconfig1-dev libpcre2-dev libzstd-dev liblzma-dev libbz2-dev zlib1g-dev libdeflate-dev libicu-dev gcc && rm -rf /var/lib/apt/lists/*
 ENV R_HOME="/usr/local/lib/R"
 ENV CRAN="https://packagemanager.posit.co/cran/latest"
 ENV CRAN="https://p3m.dev/cran/__linux__/noble/latest"
