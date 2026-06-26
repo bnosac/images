@@ -107,7 +107,6 @@ RUN uv venv .venv \
     && uv pip install --no-cache --upgrade pip \      
     && uv pip install --no-cache -r requirements.txt \      
     && rm requirements.txt
-ENV RETICULATE_PYTHON="/home/appuser/.venv"
 
 ##############################################################################################################
 ## Install VScode extensions (for that user)
