@@ -91,7 +91,7 @@ jobs:
         with:
           context: ${{ matrix.config.context }}
           push: ${{ github.event_name != 'pull_request' }}
-          tags: "${{ steps.meta.outputs.tags }}:${{ env.VERSION }}"
+          tags: "bnosac/${{ matrix.config.tag }}:${{ env.VERSION }}"
           file: ${{ matrix.config.dockerfile }}
           build-args: |
             WHISPER_MODEL=medium
