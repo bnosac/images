@@ -79,7 +79,7 @@ RUN /rocker_scripts/install_rstudio.sh
 ##  note: stringr/stringi or to be able to do rmarkdown::run from the RStudio UI
 ##
 USER root
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev libuv1-dev libfontconfig1-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libz-dev libcurl4-openssl-dev libuv1-dev libfontconfig1-dev && rm -rf /var/lib/apt/lists/*
 RUN Rscript -e "install.packages(c('curl', 'openssl', 'remotes', 'httr'), clean = TRUE)"
 RUN Rscript -e "install.packages(c('languageserver', 'httpgd'), clean = TRUE)"
 RUN Rscript -e "install.packages(c('odbc'), clean = TRUE)"
