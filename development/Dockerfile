@@ -61,19 +61,6 @@ RUN echo "options(HTTPUserAgent = sprintf('R/%s R (%s)', getRversion(), paste(ge
 RUN Rscript -e "install.packages(c('littler'), clean = TRUE)"
 RUN /rocker_scripts/setup_R.sh
 
-##
-## Default R packages
-##  note: stringr/stringi or to be able to do rmarkdown::run from the RStudio UI
-##
-USER root
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev libuv1-dev libfontconfig1-dev && rm -rf /var/lib/apt/lists/*
-RUN Rscript -e "install.packages(c('curl', 'openssl', 'remotes', 'httr'), clean = TRUE)"
-RUN Rscript -e "install.packages(c('jsonlite', 'yaml', 'zip', 'data.table', 'Rcpp', 'reticulate'), clean = TRUE)"
-RUN Rscript -e "install.packages(c('shiny', 'knitr', 'htmltools', 'markdown', 'rmarkdown', 'shinydashboard', 'flexdashboard', 'bslib', 'fontawesome', 'sass', 'farver', 'DT'), clean = TRUE)"
-RUN Rscript -e "install.packages(c('stringr', 'stringi'), clean = TRUE)"
-RUN Rscript -e "install.packages(c('languageserver', 'httpgd'), clean = TRUE)"
-RUN Rscript -e "install.packages(c('odbc'), clean = TRUE)"
-
 ##############################################################################################################
 ## Install Quarto + Julia / Python / Jupyter / Geospatial tools
 ##
@@ -86,6 +73,20 @@ RUN /rocker_scripts/install_jupyter.sh
 RUN mkdir /etc/cont-init.d
 RUN /rocker_scripts/install_rstudio.sh
 ## RUN /rocker_scripts/install_geospatial.sh
+
+##############################################################################################################
+## Default R packages
+##  note: stringr/stringi or to be able to do rmarkdown::run from the RStudio UI
+##
+USER root
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev libuv1-dev libfontconfig1-dev && rm -rf /var/lib/apt/lists/*
+RUN Rscript -e "install.packages(c('curl', 'openssl', 'remotes', 'httr'), clean = TRUE)"
+RUN Rscript -e "install.packages(c('languageserver', 'httpgd'), clean = TRUE)"
+RUN Rscript -e "install.packages(c('odbc'), clean = TRUE)"
+RUN Rscript -e "install.packages(c('jsonlite', 'yaml', 'zip', 'data.table', 'Rcpp', 'reticulate'), clean = TRUE)"
+RUN Rscript -e "install.packages(c('shiny', 'knitr', 'htmltools', 'markdown', 'rmarkdown', 'shinydashboard', 'flexdashboard', 'bslib', 'fontawesome', 'sass', 'farver', 'DT'), clean = TRUE)"
+RUN Rscript -e "install.packages(c('stringr', 'stringi'), clean = TRUE)"
+
 
 ##############################################################################################################
 ## Create user appuser which will be used as startup and which has rights to sudo with password
