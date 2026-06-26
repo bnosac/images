@@ -65,6 +65,7 @@ RUN /rocker_scripts/setup_R.sh
 ## Default R packages
 ##  note: stringr/stringi or to be able to do rmarkdown::run from the RStudio UI
 ##
+USER root
 RUN Rscript -e "install.packages(c('curl', 'openssl', 'remotes', 'httr'), clean = TRUE)"
 RUN Rscript -e "install.packages(c('jsonlite', 'yaml', 'zip', 'data.table', 'Rcpp', 'reticulate'), clean = TRUE)"
 RUN Rscript -e "install.packages(c('shiny', 'knitr', 'htmltools', 'markdown', 'rmarkdown', 'shinydashboard', 'flexdashboard', 'bslib', 'fontawesome', 'sass', 'farver', 'DT'), clean = TRUE)"
