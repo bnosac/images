@@ -93,7 +93,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
-            ${{ matrix.config.tag }}:${{ env.VERSION }}
             ghcr.io/bnosac/${{ matrix.config.tag }}:${{ env.VERSION }}
           file: ${{ matrix.config.dockerfile }}
           build-args: |
