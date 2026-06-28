@@ -19,3 +19,11 @@ docker pull ghcr.io/bnosac/whisper-base
 ```
 docker pull ghcr.io/bnosac/whisper-base-cuda-11-8
 ```
+
+- **vscode-rstudio**
+
+   - Docker image with RStudio and VSCode
+
+```
+docker pull ghcr.io/bnosac/vscode-rstudio
+```
