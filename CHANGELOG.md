@@ -8,6 +8,7 @@ Image with Ubuntu Noble 24.04 LTS
 - Python: 3.12
 - R: 4.6.0
 - Quarto / Pandoc
+- SQL Server ODBC driver
 - user appuser at /home/appuser with venv at /home/appuser/.venv
 - VSCode extensions for git (gitlab / github / vsc), quarto, shiny, python debugging, r tools
 - Basic Python and R packages
